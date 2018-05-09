@@ -7,6 +7,10 @@
   <body>
     <p>JavaScript and Google Sheets API</p>
 	
+	<!--Add buttons to initiate auth sequence and sign out-->
+    <button id="authorize-button" style="display: none;">Authorize</button>
+    <button id="signout-button" style="display: none;">Sign Out</button>
+	
 	<pre id="content"></pre>
 
     <script type="text/javascript">
@@ -21,6 +25,9 @@
       // Authorization scopes required by the API; multiple scopes can be
       // included, separated by spaces.
       var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
+
+	  var authorizeButton = document.getElementById('authorize-button');
+      var signoutButton = document.getElementById('signout-button');
 
       /**
        *  On load, called to load the auth2 library and API client library.
@@ -40,9 +47,51 @@
           discoveryDocs: DISCOVERY_DOCS,
           scope: SCOPES
         }).then(function () {
+          // Listen for sign-in state changes.
+          gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+          // Handle the initial sign-in state.
+		  
+		  
+		  
+          updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+          authorizeButton.onclick = handleAuthClick;
+          signoutButton.onclick = handleSignoutClick;
+		  
 		  listMajors();
         });
       }
+
+      /**
+       *  Called when the signed in status changes, to update the UI
+       *  appropriately. After a sign-in, the API is called.
+       */
+      function updateSigninStatus(isSignedIn) {
+        if (isSignedIn) {
+          authorizeButton.style.display = 'none';
+          signoutButton.style.display = 'block';
+          listMajors();
+        } else {
+          authorizeButton.style.display = 'block';
+          signoutButton.style.display = 'none';
+        }
+      }
+
+      /**
+       *  Sign in the user upon button click.
+       */
+      function handleAuthClick(event) {
+        gapi.auth2.getAuthInstance().signIn();
+      }
+
+      /**
+       *  Sign out the user upon button click.
+       */
+      function handleSignoutClick(event) {
+        gapi.auth2.getAuthInstance().signOut();
+      }
+
+	  
       /**
        * Append a pre element to the body containing the given message
        * as its text node. Used to display the results of the API call.
@@ -67,7 +116,18 @@
             appendPre('source: https://docs.google.com/spreadsheets/d/1WZ34E0cr1q8bfGbH_lqNzZJO5e0vtE1lhVm71L_jSOA/edit');
 			appendPre('');
 			
+			
+			/*
+			if (gapi.auth2.getAuthInstance().isSignedIn) {
+				var userEmail = gapi.auth2.getAuthInstance().currentUser.Ab.w3.U3;
+				appendPre(userEmail);
+			}
+			*/
             for (i = 0; i < range.values.length; i++) {
+			console.log(i)
+			console.log(range)
+			console.log(range.values)
+			console.log(range.values[i])
               var row = range.values[i];
 			  appendPre(range.values[i].toString());
             }
