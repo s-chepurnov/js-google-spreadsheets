@@ -47,13 +47,11 @@
           discoveryDocs: DISCOVERY_DOCS,
           scope: SCOPES
         }).then(function () {
-          // Listen for sign-in state changes.
+          
+		  // Listen for sign-in state changes.
           gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
           // Handle the initial sign-in state.
-		  
-		  
-		  
           updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
           authorizeButton.onclick = handleAuthClick;
           signoutButton.onclick = handleSignoutClick;
@@ -116,20 +114,16 @@
             appendPre('source: https://docs.google.com/spreadsheets/d/1WZ34E0cr1q8bfGbH_lqNzZJO5e0vtE1lhVm71L_jSOA/edit');
 			appendPre('');
 			
-			
-			/*
-			if (gapi.auth2.getAuthInstance().isSignedIn) {
-				var userEmail = gapi.auth2.getAuthInstance().currentUser.Ab.w3.U3;
-				appendPre(userEmail);
-			}
-			*/
             for (i = 0; i < range.values.length; i++) {
-			console.log(i)
-			console.log(range)
-			console.log(range.values)
-			console.log(range.values[i])
-              var row = range.values[i];
-			  appendPre(range.values[i].toString());
+			
+				if (gapi.auth2.getAuthInstance().isSignedIn.Ab) {
+					var userEmail = gapi.auth2.getAuthInstance().currentUser.Ab.w3.U3;
+					//console.log(range.values[i][0] === '')
+					if (range.values[i][0] === userEmail) {
+						appendPre(range.values[i].toString());
+					}
+				}
+              
             }
           } else {
             appendPre('No data found.');
