@@ -1,11 +1,17 @@
 ﻿<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
     <title>JavaScript and Google Sheets API</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
   </head>
   <body>
-    <p>JavaScript and Google Sheets API</p>
+    <p>JavaScript and Google Sheets API (https://docs.google.com/spreadsheets/d/1WZ34E0cr1q8bfGbH_lqNzZJO5e0vtE1lhVm71L_jSOA/edit')</p>
 
 	  <!--Add buttons to initiate auth sequence and sign out-->
     <button id="authorize-button" style="display: none;">Authorize</button>
@@ -116,19 +122,42 @@
   			  var range = response.result;
           clearPre();
   			  if (range.values.length > 0) {
-            appendPre('source: https://docs.google.com/spreadsheets/d/1WZ34E0cr1q8bfGbH_lqNzZJO5e0vtE1lhVm71L_jSOA/edit');
-			      appendPre('');
+
+			      appendPre('<div class="container">');
+/* TODO make an array of values an then print it
+https://stackoverflow.com/questions/12545749/table-with-twitter-bootstrap-and-jquery
+
+
+
+            <div class="row">
+    <div class="col-sm">
+      One of three columns
+    </div>
+    <div class="col-sm">
+      One of three columns
+    </div>
+    <div class="col-sm">
+      One of three columns
+    </div>
+  </div>
+  */
 
             for (i = 0; i < range.values.length; i++) {
 
 				          if (gapi.auth2.getAuthInstance().isSignedIn.Ab) {
   					        var userEmail = gapi.auth2.getAuthInstance().currentUser.Ab.w3.U3;
   					        if (range.values[i][0] === userEmail) {
+                      console.log(range.values[i]);
+                      appendPre('<div class="row">');
   						        appendPre(range.values[i].toString());
+                      appendPre('</div');
   					        }
 				          }
 
             }
+
+            appendPre('</div>');
+
           } else {
             appendPre('No data found.');
           }
@@ -144,6 +173,12 @@
       onload="this.onload=function(){};handleClientLoad()"
       onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
   </body>
 </html>
