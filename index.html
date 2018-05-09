@@ -6,16 +6,16 @@
   </head>
   <body>
     <p>JavaScript and Google Sheets API</p>
-	
-	<!--Add buttons to initiate auth sequence and sign out-->
+
+	  <!--Add buttons to initiate auth sequence and sign out-->
     <button id="authorize-button" style="display: none;">Authorize</button>
     <button id="signout-button" style="display: none;">Sign Out</button>
-	
-	<pre id="content"></pre>
+
+	  <pre id="content"></pre>
 
     <script type="text/javascript">
-		
-		// Client ID and API key from the Developer Console
+
+		  // Client ID and API key from the Developer Console
       var CLIENT_ID = '756282087657-uek2sfh4vii0jhodc3f5arcjckifidf9.apps.googleusercontent.com';
       var API_KEY = 'AIzaSyBcEKsOt2ol9hWFaLGUGgFdsm9YVQHFMlQ';
 
@@ -26,7 +26,7 @@
       // included, separated by spaces.
       var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
-	  var authorizeButton = document.getElementById('authorize-button');
+	    var authorizeButton = document.getElementById('authorize-button');
       var signoutButton = document.getElementById('signout-button');
 
       /**
@@ -47,16 +47,16 @@
           discoveryDocs: DISCOVERY_DOCS,
           scope: SCOPES
         }).then(function () {
-          
-		  // Listen for sign-in state changes.
+
+		      // Listen for sign-in state changes.
           gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
           // Handle the initial sign-in state.
           updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
           authorizeButton.onclick = handleAuthClick;
           signoutButton.onclick = handleSignoutClick;
-		  
-		  listMajors();
+
+		      listMajors();
         });
       }
 
@@ -89,7 +89,7 @@
         gapi.auth2.getAuthInstance().signOut();
       }
 
-	  
+
       /**
        * Append a pre element to the body containing the given message
        * as its text node. Used to display the results of the API call.
@@ -101,29 +101,33 @@
         var textContent = document.createTextNode(message + '\n');
         pre.appendChild(textContent);
       }
-	  
+
+      function clearPre() {
+        var pre = document.getElementById('content');
+        pre.innerHTML = '';
+      }
+
       function listMajors() {
         gapi.client.sheets.spreadsheets.values.get({
           spreadsheetId: '1WZ34E0cr1q8bfGbH_lqNzZJO5e0vtE1lhVm71L_jSOA',
           range: 'order!A2:J',
         }).then(function(response) {
-		
-			console.log(response);
-			var range = response.result;
-			if (range.values.length > 0) {
+
+  			  var range = response.result;
+          clearPre();
+  			  if (range.values.length > 0) {
             appendPre('source: https://docs.google.com/spreadsheets/d/1WZ34E0cr1q8bfGbH_lqNzZJO5e0vtE1lhVm71L_jSOA/edit');
-			appendPre('');
-			
+			      appendPre('');
+
             for (i = 0; i < range.values.length; i++) {
-			
-				if (gapi.auth2.getAuthInstance().isSignedIn.Ab) {
-					var userEmail = gapi.auth2.getAuthInstance().currentUser.Ab.w3.U3;
-					//console.log(range.values[i][0] === '')
-					if (range.values[i][0] === userEmail) {
-						appendPre(range.values[i].toString());
-					}
-				}
-              
+
+				          if (gapi.auth2.getAuthInstance().isSignedIn.Ab) {
+  					        var userEmail = gapi.auth2.getAuthInstance().currentUser.Ab.w3.U3;
+  					        if (range.values[i][0] === userEmail) {
+  						        appendPre(range.values[i].toString());
+  					        }
+				          }
+
             }
           } else {
             appendPre('No data found.');
@@ -140,6 +144,6 @@
       onload="this.onload=function(){};handleClientLoad()"
       onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
-	
+
   </body>
 </html>
