@@ -115,14 +115,9 @@
   }
 
   function isUserAuthorized() {
-    if (gapi.auth2) {
-      if (gapi.auth2.getAuthInstance()) {
-        if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
+    if (gapi.auth2 && gapi.auth2.getAuthInstance() && gapi.auth2.getAuthInstance().isSignedIn.get()) {
           return true;
-        }
-      }
     }
-
     return false;
   }
 

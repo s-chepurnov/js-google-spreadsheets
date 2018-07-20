@@ -1,11 +1,10 @@
-# js-google-spreadsheets
+### 1
+git clone https://github.com/s-chepurnov/js-google-spreadsheets.git
 
-###  branches
+### 2
+cd 'YOUR_PROJECT_DIRECTORY'
+python -m SimpleHTTPServer 8000
 
-v1 - get information from spreadsheet
-
-v2 - authorization, get information that is actual for logged user
-
-v3 - bootstrap
-
-v4 - navigation, diff pages
+### 3
+open in the browser:
+http://localhost:8000/
